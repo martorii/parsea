@@ -1,0 +1,29 @@
+name: parsea
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: parsea_api
+    restart: unless-stopped
+    ports:
+      - "${API_PORT:-8000}:${API_PORT:-8000}"
+    env_file:
+      - .env
+    environment:
+      - API_HOST=${API_HOST:-0.0.0.0}
+    volumes:
+      # Optional: Mount docs for testing inside container if needed
+      - ./docs:/app/docs:ro
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Healthcheck to ensure the container is running and responsive
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${API_PORT:-8000}/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+

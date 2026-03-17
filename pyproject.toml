@@ -1,0 +1,49 @@
+[project]
+name = "parsea-backend"
+version = "0.1.0"
+description = "Extract information from documents."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=0.84.0",
+    "fastapi>=0.135.1",
+    "google-genai>=1.67.0",
+    "huggingface-hub>=1.7.1",
+    "langchain-text-splitters>=1.1.1",
+    "pdfplumber>=0.11.9",
+    "pydantic>=2.12.5",
+    "pypdf>=6.9.0",
+    "python-docx>=1.2.0",
+    "python-dotenv>=1.2.2",
+    "python-multipart>=0.0.22",
+    "rank-bm25>=0.2.2",
+    "requests>=2.32.5",
+    "sentence-transformers>=5.3.0",
+    "types-requests>=2.32.4.20260107",
+    "uvicorn[standard]>=0.42.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=9.0.2",
+    "ruff>=0.6.0",
+    "mypy>=1.9.0",
+    "pre-commit>=4.0.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+# Enable Pyflakes (F), Pycodestyle (E, W), Isort (I), and Peformance (PERF)
+select = ["E", "F", "W", "I", "N", "UP", "PERF", "RUF"]
+ignore = ["E501", "RUF003", "RUF012", "E402"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

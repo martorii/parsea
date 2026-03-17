@@ -9,8 +9,8 @@ __pycache__/
 # ruff cache
 .ruff_cache
 
-# Docs
-docs
+# All pdfs
+**/*.pdf
 
 # Distribution / packaging
 .Python

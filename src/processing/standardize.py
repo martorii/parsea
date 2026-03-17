@@ -72,19 +72,26 @@ class CurrencyType(DataType):
     def standardize(self, raw: str, field_def: FieldDefinition) -> StdResult:
         target = field_def.currency_code or "USD"
         warning: str | None = None
-        cleaned = raw.replace(",", "").replace(" ", "")
 
+        # Detect currency before aggressive space removal
         detected = target
         for sym, code in self._SYMBOLS.items():
-            if sym in cleaned:
+            if sym in raw:
                 detected = code
-                cleaned = cleaned.replace(sym, "")
                 break
         else:
-            m = self._ISO_RE.search(cleaned)
+            m = self._ISO_RE.search(raw)
             if m:
                 detected = m.group(1)
-                cleaned = cleaned.replace(m.group(1), "")
+
+        cleaned = raw.replace(",", "").replace(" ", "")
+
+        # Remove the detected symbols/codes from the raw amount string
+        for sym in self._SYMBOLS:
+            cleaned = cleaned.replace(sym, "")
+        m_iso = self._ISO_RE.search(raw)
+        if m_iso:
+            cleaned = cleaned.replace(m_iso.group(1), "")
 
         m = re.search(r"-?\d+(\.\d+)?", cleaned)
         if not m:

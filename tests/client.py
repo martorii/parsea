@@ -12,7 +12,7 @@ from pathlib import Path
 import requests
 
 # ── Ensure src is on the path when running from backend/ ──────────────────────
-sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from dotenv import load_dotenv
 
